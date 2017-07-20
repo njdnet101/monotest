@@ -1,0 +1,19 @@
+# proj3.gocd.yaml
+pipelines:
+  monoproj3:
+    group: defaultGroup
+    materials:
+      mygit:  # this is the name of material
+        # says about type of material and url at once
+        #git: http://my.example.org/mygit.git
+        git: https://github.com/njdnet101/monotest
+        whitelist:
+          - proj3/**/*
+    stages:
+      - build: # name of stage
+          jobs:
+            build: # name of the job
+              tasks:
+                - exec: # indicates type of task
+                  command: ./build
+                  working_directory: proj3
