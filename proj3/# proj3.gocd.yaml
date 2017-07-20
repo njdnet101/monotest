@@ -15,5 +15,5 @@ pipelines:
             build: # name of the job
               tasks:
                 - exec: # indicates type of task
-                  command: ./build
-                  working_directory: proj3
+                    command: ./build
+                    working_directory: proj3
