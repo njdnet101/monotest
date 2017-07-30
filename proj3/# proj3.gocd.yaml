@@ -1,19 +1,51 @@
 # proj3.gocd.yaml
 pipelines:
-  monoproj3:
-    group: defaultGroup
+  build:
+    group: monoproj3
     materials:
-      mygit:  # this is the name of material
-        # says about type of material and url at once
-        #git: http://my.example.org/mygit.git
+      mygit:
         git: https://github.com/njdnet101/monotest
         whitelist:
           - proj3/**/*
+        shallow_clone: true
     stages:
-      - build: # name of stage
+      - build:
           jobs:
-            build: # name of the job
+            build:
               tasks:
                 - exec: # indicates type of task
                     command: ./build
                     working_directory: proj3
+      - integrationTest:
+          jobs:
+            integrationTest:
+              tasks:
+                - exec:
+                    command: pwd
+            uiTest:
+              tasks:
+                - exec:
+                    command: pwd
+  performance:
+    group: monoproj3
+    materials:
+      mydependency:
+        pipeline: build
+        stage: integrationTest
+      mygit:
+        git: https://github.com/njdnet101/monotest
+        whitelist:
+          - proj3/**/*
+    stages:
+      - deploy:
+          jobs:
+            deploy:
+              tasks:
+                - exec: # indicates type of task
+                    command: pwd
+      - performanceTest:
+          jobs:
+            performanceTest:
+              tasks:
+                - exec: # indicates type of task
+                    command: pwd
