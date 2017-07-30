@@ -1,6 +1,6 @@
 # proj3.gocd.yaml
 pipelines:
-  build:
+  monoproj3_build:
     group: monoproj3
     materials:
       mygit:
@@ -26,11 +26,11 @@ pipelines:
               tasks:
                 - exec:
                     command: pwd
-  performance:
+  monoproj3_performance:
     group: monoproj3
     materials:
       mydependency:
-        pipeline: build
+        pipeline: monoproj3_build
         stage: integrationTest
       mygit:
         git: https://github.com/njdnet101/monotest
