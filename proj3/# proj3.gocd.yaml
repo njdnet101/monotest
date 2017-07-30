@@ -32,10 +32,6 @@ pipelines:
       mydependency:
         pipeline: monoproj3_build
         stage: integrationTest
-      mygit:
-        git: https://github.com/njdnet101/monotest
-        whitelist:
-          - proj3/**/*
     stages:
       - deploy:
           jobs:
@@ -49,3 +45,53 @@ pipelines:
               tasks:
                 - exec: # indicates type of task
                     command: pwd
+  monoproj3_preproduction:
+    group: monoproj3
+    materials:
+      mydependency:
+        pipeline: monoproj3_performance
+        stage: performanceTest
+    stages:
+      - pendingApproval:
+          jobs:
+            pendingApproval:
+              tasks:
+                - exec:
+                    command: pwd
+      - deploy:
+          approval:
+            type: manual
+          jobs:
+            deploy:
+              tasks:
+                - exec: # indicates type of task
+                    command: pwd
+  monoproj3_productionNam:
+    group: monoproj3
+    materials:
+      mydependency:
+        pipeline: monoproj3_preproduction
+        stage: deploy
+    stages:
+      - pendingApproval:
+          jobs:
+            pendingApproval:
+              tasks:
+                - exec:
+                    command: echo production nam pending approval
+      - deployC17:
+          approval:
+            type: manual
+          jobs:
+            deploy:
+              tasks:
+                - exec:
+                    command: echo deploy C17
+      - deployC16:
+          approval:
+            type: manual
+          jobs:
+            deploy:
+              tasks:
+                - exec:
+                    command: echo deploy C16
