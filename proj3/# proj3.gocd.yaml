@@ -28,7 +28,9 @@ pipelines:
             uiTest:
               tasks:
                 - exec:
-                    command: pwd
+                    command: echo
+                    arguments:
+                      - "ui test"
   monoproj3_performance:
     group: monoproj3
     materials:
@@ -40,14 +42,20 @@ pipelines:
           jobs:
             deploy:
               tasks:
-                - exec: # indicates type of task
-                    command: pwd
+                - exec:
+                    command: echo
+                    arguments:
+                      - "deploy"
+
       - performanceTest:
           jobs:
             performanceTest:
               tasks:
-                - exec: # indicates type of task
-                    command: pwd
+                - exec:
+                    command: echo
+                    arguments:
+                      - "performance test"
+
   monoproj3_preproduction:
     group: monoproj3
     materials:
@@ -60,15 +68,20 @@ pipelines:
             pendingApproval:
               tasks:
                 - exec:
-                    command: pwd
+                    command: echo
+                    arguments:
+                      - "pending approval"
+
       - deploy:
           approval:
             type: manual
           jobs:
             deploy:
               tasks:
-                - exec: # indicates type of task
-                    command: pwd
+                - exec:
+                    command: echo
+                    arguments:
+                      - "integration test"
   monoproj3_productionNam:
     group: monoproj3
     materials:
@@ -81,7 +94,9 @@ pipelines:
             pendingApproval:
               tasks:
                 - exec:
-                    command: echo production nam pending approval
+                    command: echo 
+                    arguments:
+                      - "pending approval"
       - deployC17:
           approval:
             type: manual
@@ -89,7 +104,9 @@ pipelines:
             deploy:
               tasks:
                 - exec:
-                    command: echo deploy C17
+                    command: echo
+                    arguments:
+                      - "deploy C17"
       - deployC16:
           approval:
             type: manual
@@ -97,4 +114,75 @@ pipelines:
             deploy:
               tasks:
                 - exec:
-                    command: echo deploy C16
+                    command: echo
+                    arguments:
+                      - "deploy C16"
+      - complete:
+          jobs:
+            complete:
+              tasks:
+                - exec:
+                    command: echo 
+                    arguments:
+                      - "complete"
+  monoproj3_productionEmea:
+    group: monoproj3
+    materials:
+      mydependency:
+        pipeline: monoproj3_preproduction
+        stage: deploy
+    stages:
+      - pendingApproval:
+          jobs:
+            pendingApproval:
+              tasks:
+                - exec:
+                    command: echo 
+                    arguments:
+                      - "pending approval"
+      - deployC30:
+          approval:
+            type: manual
+          jobs:
+            deploy:
+              tasks:
+                - exec:
+                    command: echo
+                    arguments:
+                      - "deploy C30"
+      - deployC31:
+          approval:
+            type: manual
+          jobs:
+            deploy:
+              tasks:
+                - exec:
+                    command: echo
+                    arguments:
+                      - "deploy C31"
+      - complete:
+          jobs:
+            complete:
+              tasks:
+                - exec:
+                    command: echo 
+                    arguments:
+                      - "complete"
+  monoproj3_complete:
+    group: monoproj3
+    materials:
+      mydependency:
+        pipeline: monoproj3_productionNam
+        stage: complete
+      mydependency:
+        pipeline: monoproj3_productionEmea
+        stage: complete
+    stages:
+      - complete:
+          jobs:
+            complete:
+              tasks:
+                - exec:
+                    command: echo 
+                    arguments:
+                      - "complete"
