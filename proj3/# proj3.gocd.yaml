@@ -171,10 +171,10 @@ pipelines:
   monoproj3_complete:
     group: monoproj3
     materials:
-      mydependency:
+      mydependency1:
         pipeline: monoproj3_productionNam
         stage: complete
-      mydependency:
+      mydependency2:
         pipeline: monoproj3_productionEmea
         stage: complete
     stages:
