@@ -21,7 +21,10 @@ pipelines:
             integrationTest:
               tasks:
                 - exec:
-                    command: pwd
+                    command: echo
+                    arguments:
+                      - "integration test"
+
             uiTest:
               tasks:
                 - exec:
