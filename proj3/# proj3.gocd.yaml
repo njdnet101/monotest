@@ -13,7 +13,7 @@ pipelines:
           jobs:
             build:
               tasks:
-                - exec: # indicates type of task
+                - exec:
                     command: ./build
                     working_directory: proj3
       - integrationTest:
