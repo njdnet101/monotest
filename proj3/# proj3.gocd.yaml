@@ -1,19 +1,188 @@
 # proj3.gocd.yaml
 pipelines:
-  monoproj3:
-    group: defaultGroup
+  monoproj3_build:
+    group: monoproj3
     materials:
-      mygit:  # this is the name of material
-        # says about type of material and url at once
-        #git: http://my.example.org/mygit.git
+      mygit:
         git: https://github.com/njdnet101/monotest
         whitelist:
           - proj3/**/*
+        shallow_clone: true
     stages:
-      - build: # name of stage
+      - build:
           jobs:
-            build: # name of the job
+            build:
               tasks:
-                - exec: # indicates type of task
+                - exec:
                     command: ./build
                     working_directory: proj3
+      - integrationTest:
+          jobs:
+            integrationTest:
+              tasks:
+                - exec:
+                    command: echo
+                    arguments:
+                      - "integration test"
+
+            uiTest:
+              tasks:
+                - exec:
+                    command: echo
+                    arguments:
+                      - "ui test"
+  monoproj3_performance:
+    group: monoproj3
+    materials:
+      mydependency:
+        pipeline: monoproj3_build
+        stage: integrationTest
+    stages:
+      - deploy:
+          jobs:
+            deploy:
+              tasks:
+                - exec:
+                    command: echo
+                    arguments:
+                      - "deploy"
+
+      - performanceTest:
+          jobs:
+            performanceTest:
+              tasks:
+                - exec:
+                    command: echo
+                    arguments:
+                      - "performance test"
+
+  monoproj3_preproduction:
+    group: monoproj3
+    materials:
+      mydependency:
+        pipeline: monoproj3_performance
+        stage: performanceTest
+    stages:
+      - pendingApproval:
+          jobs:
+            pendingApproval:
+              tasks:
+                - exec:
+                    command: echo
+                    arguments:
+                      - "pending approval"
+
+      - deploy:
+          approval:
+            type: manual
+          jobs:
+            deploy:
+              tasks:
+                - exec:
+                    command: echo
+                    arguments:
+                      - "integration test"
+  monoproj3_productionNam:
+    group: monoproj3
+    materials:
+      mydependency:
+        pipeline: monoproj3_preproduction
+        stage: deploy
+    stages:
+      - pendingApproval:
+          jobs:
+            pendingApproval:
+              tasks:
+                - exec:
+                    command: echo 
+                    arguments:
+                      - "pending approval"
+      - deployC17:
+          approval:
+            type: manual
+          jobs:
+            deploy:
+              tasks:
+                - exec:
+                    command: echo
+                    arguments:
+                      - "deploy C17"
+      - deployC16:
+          approval:
+            type: manual
+          jobs:
+            deploy:
+              tasks:
+                - exec:
+                    command: echo
+                    arguments:
+                      - "deploy C16"
+      - complete:
+          jobs:
+            complete:
+              tasks:
+                - exec:
+                    command: echo 
+                    arguments:
+                      - "complete"
+  monoproj3_productionEmea:
+    group: monoproj3
+    materials:
+      mydependency:
+        pipeline: monoproj3_preproduction
+        stage: deploy
+    stages:
+      - pendingApproval:
+          jobs:
+            pendingApproval:
+              tasks:
+                - exec:
+                    command: echo 
+                    arguments:
+                      - "pending approval"
+      - deployC30:
+          approval:
+            type: manual
+          jobs:
+            deploy:
+              tasks:
+                - exec:
+                    command: echo
+                    arguments:
+                      - "deploy C30"
+      - deployC31:
+          approval:
+            type: manual
+          jobs:
+            deploy:
+              tasks:
+                - exec:
+                    command: echo
+                    arguments:
+                      - "deploy C31"
+      - complete:
+          jobs:
+            complete:
+              tasks:
+                - exec:
+                    command: echo 
+                    arguments:
+                      - "complete"
+  monoproj3_complete:
+    group: monoproj3
+    materials:
+      mydependency1:
+        pipeline: monoproj3_productionNam
+        stage: complete
+      mydependency2:
+        pipeline: monoproj3_productionEmea
+        stage: complete
+    stages:
+      - complete:
+          jobs:
+            complete:
+              tasks:
+                - exec:
+                    command: echo 
+                    arguments:
+                      - "complete"
