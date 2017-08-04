@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Building proj3_artifact"
+echo "Building proj3_artifact."
 
 count=0
 while [ "$count" -lt 5 ]; do
