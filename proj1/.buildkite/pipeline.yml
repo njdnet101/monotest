@@ -16,5 +16,6 @@ steps:
     command: "echo \"performance test\""
   - wait
   - label: ":checkered_flag:"
+    command: "echo \"done\""
   
   
