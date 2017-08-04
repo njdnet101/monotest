@@ -1,0 +1,14 @@
+steps:
+- label: "deploy C9"
+    command: "echo \"deploy C9\""
+  - wait
+  - label: "performance test"
+    command: "echo \"performance test\""
+  - wait
+  - block: "Release"
+    prompt: "Deploy to C98"
+  - label: ":rocket: deploy C98"
+    command: "echo \"deploy C98\""
+  - wait
+  - label: ":checkered_flag:"
+    command: "echo \"done\""
