@@ -1,5 +1,5 @@
 steps:
-- label: "deploy C9"
+  - label: "deploy C9"
     command: "echo \"deploy C9\""
   - wait
   - label: "performance test"
