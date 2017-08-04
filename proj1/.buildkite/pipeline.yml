@@ -23,5 +23,7 @@ steps:
   - wait
   - label: ":checkered_flag:"
     command: "echo \"done\""
+  - trigger: "proj1deploy"
+
   
   
