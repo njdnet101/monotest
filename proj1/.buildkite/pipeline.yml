@@ -1,2 +1,13 @@
 steps:
   - command: "echo \"build proj1\""
+  - wait
+  - command: "echo \"unit test proj1\""
+  - wait
+  - command: "echo \"integration test proj1\"" 
+  - command: "echo \"ui test proj1\""
+  - wait
+  - command: "echo \"deploy C9\""
+  - command: "echo \"performance test\""
+  - wait
+  
+  
