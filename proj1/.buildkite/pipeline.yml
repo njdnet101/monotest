@@ -22,7 +22,7 @@ steps:
     command: "echo \"deploy C98\""
   - wait
   - label: ":checkered_flag:"
-    command: "echo \"done\""
+    command: "echo \"done!\""
   - trigger: "proj1deploy"
 
   
