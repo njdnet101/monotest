@@ -1,10 +1,10 @@
 steps:
-  - trigger: $BUILDKITE_ORGANIZATION_SLUG/proj1
+  - trigger: proj1
     build:
       branch: $BUILDKITE_BRANCH
       commit: $BUILDKITE_COMMIT
       message: $BUILDKITE_MESSAGE
-  - trigger: $BUILDKITE_ORGANIZATION_SLUG/proj2
+  - trigger: proj2
     build:
       branch: $BUILDKITE_BRANCH
       commit: $BUILDKITE_COMMIT
