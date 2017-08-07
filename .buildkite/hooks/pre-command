@@ -1,8 +1,2 @@
 #!/usr/bin/env bash
 
-set -eu
-
-# load common utils
-. .buildkite/utils.sh
-
-run_pre_command_for "${BUILDKITE_PIPELINE_SLUG}"

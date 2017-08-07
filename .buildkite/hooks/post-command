@@ -1,8 +1,12 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-set -eu
-
-# load common utils
-. .buildkite/utils.sh
-
-run_post_command_for "${BUILDKITE_PIPELINE_SLUG}"
+case "$BUILDKITE_PIPELINE_SLUG" in
+proj1)
+  export BUILDKITE_CHECKOUT_PATH="$BUILDKITE_CHECKOUT_PATH/proj1"
+  ;;
+proj2)
+  export BUILDKITE_CHECKOUT_PATH="$BUILDKITE_CHECKOUT_PATH/proj2"
+  ;;
+*)
+  # Leave the path alone and run the main pipeline
+esac
