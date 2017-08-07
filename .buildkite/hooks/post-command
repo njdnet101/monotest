@@ -2,8 +2,8 @@
 
 echo "post command before"
 
-echo BUILDKITE_PIPELINE_SLUG
-echo BUILDKITE_CHECKOUT_PATH
+echo "$BUILDKITE_PIPELINE_SLUG"
+echo "$BUILDKITE_CHECKOUT_PATH"
 
 case "$BUILDKITE_PIPELINE_SLUG" in
 proj1)
@@ -18,5 +18,5 @@ esac
 
 echo "post command after"
 
-echo BUILDKITE_PIPELINE_SLUG
-echo BUILDKITE_CHECKOUT_PATH
+echo "$BUILDKITE_PIPELINE_SLUG"
+echo "$BUILDKITE_CHECKOUT_PATH"
