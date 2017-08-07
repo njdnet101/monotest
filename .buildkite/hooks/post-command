@@ -20,3 +20,4 @@ echo "post command after"
 
 echo "$BUILDKITE_PIPELINE_SLUG"
 echo "$BUILDKITE_CHECKOUT_PATH"
+
