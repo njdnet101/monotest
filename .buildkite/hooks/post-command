@@ -3,14 +3,14 @@
 echo "post command before"
 
 echo "$BUILDKITE_PIPELINE_SLUG"
-echo "$BUILDKITE_CHECKOUT_PATH"
+echo "$BUILDKITE_BUILD_CHECKOUT_PATH"
 
 case "$BUILDKITE_PIPELINE_SLUG" in
 proj1)
-  export BUILDKITE_CHECKOUT_PATH="$BUILDKITE_CHECKOUT_PATH/proj1"
+  export BUILDKITE_BUILD_CHECKOUT_PATH="$BUILDKITE_BUILD_CHECKOUT_PATH/proj1"
   ;;
 proj2)
-  export BUILDKITE_CHECKOUT_PATH="$BUILDKITE_CHECKOUT_PATH/proj2"
+  export BUILDKITE_CHECKOUT_PATH="$BUILDKITE_BUILD_CHECKOUT_PATH/proj2"
   ;;
 *)
   # Leave the path alone and run the main pipeline
@@ -19,5 +19,5 @@ esac
 echo "post command after"
 
 echo "$BUILDKITE_PIPELINE_SLUG"
-echo "$BUILDKITE_CHECKOUT_PATH"
+echo "$BUILDKITE_BUILD_CHECKOUT_PATH"
 
