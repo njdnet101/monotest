@@ -25,23 +25,22 @@ set -eu
 
 previous_build="$(($BUILDKITE_BUILD_NUMBER - 1))"
 
-response=`curl "https://api.buildkite.com/v2/organizations/newvoicemedia/pipelines/monotest/builds/${previous_build}?access_token=477f1c395119a00cf113653a41f6e09d1cdda979"`
+response=$(curl "https://api.buildkite.com/v2/organizations/newvoicemedia/pipelines/monotest/builds/${previous_build}?access_token=477f1c395119a00cf113653a41f6e09d1cdda979")
 
-previous_commit=`echo $response | jq '.commit'`
+previous_commit=$(echo $response | jq '.commit')
 
 # strip quotes
-previous_commit=`sed -e 's/^"//' -e 's/"$//' <<<"$previous_commit"`
+previous_commit=$(sed -e 's/^"//' -e 's/"$//' <<<"$previous_commit")
 
-# diff to get the changed files
-#diffs=`git diff --name-only ${previous_commit} ${BUILDKITE_COMMIT} `
-#echo "$diffs"
+# diff to get the changed files, and filter for just the top level directories
+# TODO: filter for only those directories contaning a .buildkite subdirectory
 
-array=`git diff --name-only ${previous_commit} ${BUILDKITE_COMMIT} | sort -u | awk 'BEGIN {FS="/"} {print $1}' | uniq`
-#printf -- "%s\n" "${array[@]}"
-#printf "\n"
+#array=`git diff --name-only ${previous_commit} ${BUILDKITE_COMMIT} | sort -u | uniq`
+array=$(git diff --name-only ${previous_commit} ${BUILDKITE_COMMIT} | sort -u | awk 'BEGIN {FS="/"} {print $1}' | uniq)
 for element in $array
 do
     echo $element
+    create_pipeline $element
 done
-create_pipeline "Foo"
+
 
