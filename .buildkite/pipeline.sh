@@ -2,8 +2,7 @@
 
 create_pipeline() {
 	local proj=$1
-	# begin the pipeline.yml file
-	echo "steps:"
+
 	echo "  - trigger: $proj"
 	echo "    build:"
 	echo "      branch: $BUILDKITE_BRANCH"
@@ -37,11 +36,12 @@ previous_commit=$(sed -e 's/^"//' -e 's/"$//' <<<"$previous_commit")
 
 #array=`git diff --name-only ${previous_commit} ${BUILDKITE_COMMIT} | sort -u | uniq`
 array=$(git diff --name-only ${previous_commit} ${BUILDKITE_COMMIT} | sort -u | awk 'BEGIN {FS="/"} {print $1}' | uniq)
-#for element in $array
-#do
+
+echo "steps:"
+for element in $array
+do
     #echo $element
-#    create_pipeline $element
-#done
+    create_pipeline $element
+done
+echo "  - label: \"Done\""
 
-
-create_pipeline proj1
