@@ -44,4 +44,4 @@ do
     create_pipeline $element
 done
 echo "  - label: \"Done\""
-
+echo "    command: \"echo \"Done\"\""
