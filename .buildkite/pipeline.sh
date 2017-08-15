@@ -11,12 +11,6 @@ create_pipeline() {
 }
 
 
-#BUILDKITE_BRANCH="branch"
-#BUILDKITE_COMMIT="bd3710210b49760a697af3524e59bc17f2b5e2ee"
-#BUILDKITE_MESSAGE="message"
-#BUILDKITE_BUILD_NUMBER="10"
-
-
 # exit immediately on failure, or if an undefined variable is used
 set -eu
 
@@ -38,10 +32,10 @@ previous_commit=$(sed -e 's/^"//' -e 's/"$//' <<<"$previous_commit")
 array=$(git diff --name-only ${previous_commit} ${BUILDKITE_COMMIT} | sort -u | awk 'BEGIN {FS="/"} {print $1}' | uniq)
 
 echo "steps:"
-#for element in $array
-#do
+for element in $array
+do
     #echo $element
-#    create_pipeline $element
-#done
+    create_pipeline $element
+done
 echo "  - label: \"Done\""
 echo "    command: 'echo \"Done\"'"
