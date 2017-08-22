@@ -28,23 +28,19 @@ previous_commit=$(sed -e 's/^"//' -e 's/"$//' <<<"$previous_commit")
 # diff to get the changed files, and filter for just the top level directories
 # TODO: filter for only those directories contaning a .buildkite subdirectory
 
+ignore='.buildkite'
+
 #array=`git diff --name-only ${previous_commit} ${BUILDKITE_COMMIT} | sort -u | uniq`
 array=$(git diff --name-only ${previous_commit} ${BUILDKITE_COMMIT} | sort -u | awk 'BEGIN {FS="/"} {print $1}' | uniq)
 
-ignore='.buildkite'
+farray=$(egrep -v "${ignore}" ${array})
 
 echo "steps:"
-for element in $array
+for element in $farray
 do
-	if [[$ignore == $element]]; then
-#		:
-		echo "is buildkite dir"
-	else
-	    #echo $element    	
-	    create_pipeline $element
-   fi
+	create_pipeline $element
 
-	echo "  - command: 'echo ${element}'"
+#	echo "  - command: 'echo ${element}'"
 
 done
 echo "  - label: \"Done\""
