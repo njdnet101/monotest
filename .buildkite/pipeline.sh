@@ -34,12 +34,13 @@ array=$(git diff --name-only ${previous_commit} ${BUILDKITE_COMMIT} | sort -u | 
 echo "steps:"
 for element in $array
 do
-#	if [".buildkite" = "$element"]; then
+	if [".buildkite" = $element]; then
 #		:
-#	else
-#	    #echo $element
-#    	create_pipeline $element
-#   fi
+		echo "is buildkite dir"
+	else
+	    #echo $element    	
+	    create_pipeline $element
+   fi
 
 	echo "  - command: 'echo ${element}'"
 
