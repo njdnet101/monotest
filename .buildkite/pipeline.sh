@@ -31,10 +31,12 @@ previous_commit=$(sed -e 's/^"//' -e 's/"$//' <<<"$previous_commit")
 #array=`git diff --name-only ${previous_commit} ${BUILDKITE_COMMIT} | sort -u | uniq`
 array=$(git diff --name-only ${previous_commit} ${BUILDKITE_COMMIT} | sort -u | awk 'BEGIN {FS="/"} {print $1}' | uniq)
 
+ignore='.buildkite'
+
 echo "steps:"
 for element in $array
 do
-	if [['.buildkite' == $element]]; then
+	if [[$ignore == $element]]; then
 #		:
 		echo "is buildkite dir"
 	else
