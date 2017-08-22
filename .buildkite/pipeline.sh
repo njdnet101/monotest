@@ -34,7 +34,7 @@ array=$(git diff --name-only ${previous_commit} ${BUILDKITE_COMMIT} | sort -u | 
 echo "steps:"
 for element in $array
 do
-	if [".buildkite" = $element]; then
+	if [".buildkite" == $element]; then
 #		:
 		echo "is buildkite dir"
 	else
