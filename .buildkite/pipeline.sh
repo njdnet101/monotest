@@ -4,6 +4,7 @@ create_pipeline() {
 	local proj=$1
 
 	echo "  - trigger: $proj"
+	echo "    async: true"
 	echo "    build:"
 	echo "      branch: $BUILDKITE_BRANCH"
 	echo "      commit: $BUILDKITE_COMMIT"
