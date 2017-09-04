@@ -14,6 +14,12 @@ create_pipeline() {
 # exit immediately on failure, or if an undefined variable is used
 set -eu
 
+BUILDKITE_BRANCH="master"
+BUILDKITE_COMMIT="33304c71322ccb2b2ff656b382ab8018900ade0e"
+BUILDKITE_MESSAGE="foo"
+BUILDKITE_BUILD_NUMBER=40
+ACCESS_TOKEN="477f1c395119a00cf113653a41f6e09d1cdda979"
+
 # get the previous commit, so we can do a diff
 
 previous_build="$(($BUILDKITE_BUILD_NUMBER - 1))"
@@ -33,7 +39,9 @@ ignore='.buildkite'
 #array=`git diff --name-only ${previous_commit} ${BUILDKITE_COMMIT} | sort -u | uniq`
 array=$(git diff --name-only ${previous_commit} ${BUILDKITE_COMMIT} | sort -u | awk 'BEGIN {FS="/"} {print $1}' | uniq)
 
-farray=$(egrep -v "${ignore}" ${array})
+echo "${array}"
+
+farray=$(echo "${ignore}" | egrep -v "${array}")
 
 echo "steps:"
 for element in $farray
